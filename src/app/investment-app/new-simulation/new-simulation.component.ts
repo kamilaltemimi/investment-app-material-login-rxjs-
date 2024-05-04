@@ -40,23 +40,37 @@ export class NewSimulationComponent implements OnInit {
   }
 
   submitForm(): void {
+    let existingUser = false
     if (this.existingUsers) {
       for (let user of this.existingUsers) {
         if (user.nickname === this.createAccountForm.value.nickname) {
           this.takenNickname = true
-          setInterval(() => this.takenNickname = false, 5000)
+          setTimeout(() => this.takenNickname = false, 5000)
+          existingUser = true
           return
         } 
       }
     }
-    this.userDataService.createUser(this.createAccountForm.value)
+    if (!existingUser) {
+      this.userDataService.createUser(this.createAccountForm.value)
       .subscribe(() => this.userDataService.getUserByNickname(this.createAccountForm.value.nickname)
-      .subscribe(data => this.navigateToPortfolio(data!.nickname)))
-
-    this.investmentService.setNavbarStatus(true)
+      .subscribe(data => {
+        this.setCurrentUser(data!)
+        this.navigateToPortfolio(data!.nickname)
+        this.setNavbarStatus(true)
+      }))
+    }
   }
 
-  navigateToPortfolio(nickname: string){
+  setNavbarStatus(value: boolean): void {
+    this.investmentService.setNavbarStatus(value)
+  }
+  
+  setCurrentUser(user: User): void {
+    this.userDataService.setCurrentUser(user)
+  }
+
+  navigateToPortfolio(nickname: string): void {
     this.routingService.navigate(`simulation/${nickname}/portfolio`)
   }
 }

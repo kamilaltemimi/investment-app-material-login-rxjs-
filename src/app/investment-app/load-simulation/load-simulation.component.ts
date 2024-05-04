@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/core/models/user';
 import { RoutingService } from 'src/app/core/services/routing/routing.service';
+import { InvestmentService } from 'src/app/core/services/investment/investment.service';
 
 @Component({
   selector: 'app-load-simulation',
@@ -18,7 +19,8 @@ export class LoadSimulationComponent implements OnInit{
   constructor(
     private fb: FormBuilder,
     private userDataService: UserDataService,
-    private routingService: RoutingService
+    private routingService: RoutingService,
+    private investmentService: InvestmentService
   ){}
 
   ngOnInit(): void {
@@ -38,14 +40,37 @@ export class LoadSimulationComponent implements OnInit{
   }
 
   submitForm(): void {
+    let userFound = false
     for (let user of this.users) {
       if (user.nickname === this.loginForm.value.nickname && user.password === this.loginForm.value.password) {
-        this.routingService.navigate(`simulation/${user.nickname}/portfolio`)
-      } else if (user.nickname !== this.loginForm.value.nickname || user.password !== this.loginForm.value.password) {
-        this.alert = true
-        setInterval(() => this.alert = false, 5000)
-      }
+        this.userDataService.getUserByNickname(this.loginForm.value.nickname)
+        .subscribe(data => {
+          this.setCurrentUser(data!)
+          this.navigateToPortfolio(data!.nickname)
+          this.setNavbarStatus(true)
+        })
+        userFound = true
+        return
+      } 
+    }
+    if (!userFound) {
+      this.alert = true
+      setTimeout(() => this.alert = false, 5000)
     }
   }
 
+  setNavbarStatus(value: boolean): void {
+    this.investmentService.setNavbarStatus(value)
+  }
+  
+  setCurrentUser(user: User): void {
+    this.userDataService.setCurrentUser(user)
+  }
+
+  navigateToPortfolio(nickname: string): void {
+    this.routingService.navigate(`simulation/${nickname}/portfolio`)
+  }
+
 }
+
+

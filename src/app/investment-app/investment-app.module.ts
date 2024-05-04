@@ -33,8 +33,6 @@ import { InvestmentService } from '../core/services/investment/investment.servic
     HttpClientModule
   ],
   providers: [
-    UserDataService,
-    RoutingService
   ]
 })
 export class InvestmentAppModule { }
