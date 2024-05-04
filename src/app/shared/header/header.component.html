@@ -1,0 +1,47 @@
+<mat-toolbar color="primary" fxFlex fxLayoutAlign="center">
+  <div fxFlex="95%" fxLayoutAlign="space-between center">
+
+    <div class="logo" fxLayout fxLayoutAlign="center center">
+      <span (click)="goToHomepage()">LOGO</span>
+    </div>  
+
+    <div>
+      <mat-list *ngIf="navbarStatus" class="mat-list" fxHide.lt-sm fxLayout>
+        <mat-list-item>
+          <span class="list-item" fxLayout fxLayoutAlign="end">
+            Market
+          </span>
+        </mat-list-item>
+        <mat-list-item>
+          <span class="list-item" fxLayout fxLayoutAlign="end">
+            Portfolio
+          </span>
+        </mat-list-item>
+        <mat-list-item> 
+          <span (click)="goToHomepage()" class="list-item" fxLayout fxLayoutAlign="end">
+            Logout
+          </span>
+        </mat-list-item>
+      </mat-list>
+
+      <button *ngIf="navbarStatus" [matMenuTriggerFor]="menu" fxHide.gt-xs mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>store</mat-icon>
+          <span>Market</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>account_balance_wallet</mat-icon>
+          <span>Portfolio</span>
+        </button>
+        <button mat-menu-item (click)="goToHomepage()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </div>
+
+  </div>
+</mat-toolbar>

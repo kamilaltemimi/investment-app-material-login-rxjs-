@@ -1,1 +1,14 @@
-<p>investment-app works!</p>
+<div fxFlex fxLayoutAlign="center">
+  <div class="content-container" fxFlex="95%" fxLayout="column" fxLayoutAlign="center center">
+    <div class="content-header" fxFlex="90%">
+      Welcome to the investment simulator
+    </div>
+    <div class="content-content">
+      Select an option from below and begin your simulation
+    </div>
+    <div class="content-buttons" fxLayout fxLayoutGap="20px">
+      <button (click)="createNewSimulation()" mat-flat-button color="warn">New simulation</button>
+      <button (click)="loadSimulation()" mat-flat-button color="warn">Load simulation</button>
+    </div>
+  </div>
+</div>

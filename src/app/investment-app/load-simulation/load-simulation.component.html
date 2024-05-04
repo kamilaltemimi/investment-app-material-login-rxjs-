@@ -1,0 +1,25 @@
+<div fxFlex fxLayoutAlign="center">
+  <div class="content-container" fxFlex="95%" fxLayout="column" fxLayoutAlign="start center">
+    <h2>Enter yout details</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="submitForm()" fxLayout="column">
+      <mat-form-field>
+        <mat-label for="nickname">nickname</mat-label>
+        <input matInput formControlName="nickname" maxlength="20" #nickname>
+        <mat-hint>Enter your nickname {{nickname.value.length}}/20</mat-hint>
+        <mat-error>You have to enter your nickname!</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label for="password">password</mat-label>
+        <input matInput formControlName="password" maxlength="20" #password type="password">
+        <mat-hint>Enter your password {{password.value.length}}/20</mat-hint>
+        <mat-error>You have to enter your password!</mat-error>
+      </mat-form-field>
+      <div fxLayoutAlign="center">      
+        <p class="alert" *ngIf="alert">Wrong login details</p>
+      </div>
+      <button [disabled]="loginForm.invalid" class="submit-button" mat-flat-button color="warn" type="submit">Login</button>
+
+    </form>
+
+  </div>
+</div>

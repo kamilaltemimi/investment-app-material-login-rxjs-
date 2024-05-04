@@ -1,0 +1,22 @@
+<div fxFlex fxLayoutAlign="center">
+  <div class="content-container" fxFlex="95%" fxLayout="column" fxLayoutAlign="start center">
+    <h2>Create your account</h2>
+    <form [formGroup]="createAccountForm" (ngSubmit)="submitForm()" fxLayout="column">
+      <mat-form-field>
+        <mat-label for="nickname">nickname</mat-label>
+        <input matInput formControlName="nickname" maxlength="20" #nickname>
+        <mat-hint>Create your nickname {{nickname.value.length}}/20</mat-hint>
+        <mat-error>You have to create your nickname!</mat-error>
+      </mat-form-field>
+      <p class="alert" *ngIf="takenNickname">This nickname is already taken!</p>
+      <mat-form-field>
+        <mat-label for="password">password</mat-label>
+        <input matInput formControlName="password" maxlength="20" #password type="password">
+        <mat-hint>Create your password {{password.value.length}}/20</mat-hint>
+        <mat-error>You have to create your password!</mat-error>
+      </mat-form-field>
+      <button [disabled]="createAccountForm.invalid" class="submit-button" mat-flat-button color="warn" type="submit">Submit</button>
+    </form>
+
+  </div>
+</div>

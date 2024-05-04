@@ -1,0 +1,36 @@
+.mat-list {
+  list-style: none;
+}
+
+.list-item {
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.list-item:hover {
+  color: black;
+}
+
+mat-toolbar {
+  padding: 0;
+}
+
+mat-list-item {
+  padding: 0;
+  width: auto;
+  margin-left: 30px;
+}
+
+mat-toolbar {
+  min-height: 64px;
+}
+
+.hamburger-menu-button:hover {
+  color: black;
+}
+
+.logo {
+  cursor: pointer;
+}
