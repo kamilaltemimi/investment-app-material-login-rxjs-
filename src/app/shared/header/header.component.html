@@ -11,12 +11,12 @@
           <span class="list-item-welcome">Hello, {{currentUser.nickname}}!</span>
         </mat-list-item>
         <mat-list-item>
-          <span class="list-item" fxLayout fxLayoutAlign="end">
+          <span (click)="navigateToMarket()" class="list-item" fxLayout fxLayoutAlign="end">
             Market
           </span>
         </mat-list-item>
         <mat-list-item>
-          <span class="list-item" fxLayout fxLayoutAlign="end">
+          <span (click)="navigateToPortfolio()" class="list-item" fxLayout fxLayoutAlign="end">
             Portfolio
           </span>
         </mat-list-item>
@@ -31,11 +31,11 @@
         <mat-icon>menu</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="navigateToMarket()">
           <mat-icon>store</mat-icon>
           <span>Market</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="navigateToPortfolio()">
           <mat-icon>account_balance_wallet</mat-icon>
           <span>Portfolio</span>
         </button>

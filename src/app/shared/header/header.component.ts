@@ -38,5 +38,12 @@ export class HeaderComponent implements OnInit {
     this.investmentService.setNavbarStatus(false)
   }
 
+  navigateToPortfolio(): void {
+    this.routingService.navigate(`simulation/${this.currentUser.id}/${this.currentUser.nickname}/portfolio`)
+  }
+
+  navigateToMarket(): void {
+    this.routingService.navigate(`simulation/${this.currentUser.id}/${this.currentUser.nickname}/market`)
+  }
 
 }

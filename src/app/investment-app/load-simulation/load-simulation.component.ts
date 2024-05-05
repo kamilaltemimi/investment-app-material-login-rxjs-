@@ -46,7 +46,7 @@ export class LoadSimulationComponent implements OnInit{
         this.userDataService.getUserByNickname(this.loginForm.value.nickname)
         .subscribe(data => {
           this.setCurrentUser(data!)
-          this.navigateToPortfolio(data!.nickname)
+          this.navigateToPortfolio(data!.id!, data!.nickname)
           this.setNavbarStatus(true)
         })
         userFound = true
@@ -67,8 +67,8 @@ export class LoadSimulationComponent implements OnInit{
     this.userDataService.setCurrentUser(user)
   }
 
-  navigateToPortfolio(nickname: string): void {
-    this.routingService.navigate(`simulation/${nickname}/portfolio`)
+  navigateToPortfolio(id: string, nickname: string): void {
+    this.routingService.navigate(`simulation//${id}/${nickname}/portfolio`)
   }
 
 }

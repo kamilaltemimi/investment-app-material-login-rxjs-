@@ -10,8 +10,8 @@ const routes: Routes = [
   {path: '', component: InvestmentAppComponent},
   {path: 'new-simulation', component: NewSimulationComponent},
   {path: 'load-simulation', component: LoadSimulationComponent},
-  {path: 'simulation/:id/market', component: MarketComponent},
-  {path: 'simulation/:id/portfolio', component: PortfolioComponent}
+  {path: 'simulation/:id/:nickname/market', component: MarketComponent},
+  {path: 'simulation/:id/:nickname/portfolio', component: PortfolioComponent}
 ];
 
 @NgModule({

@@ -56,7 +56,7 @@ export class NewSimulationComponent implements OnInit {
       .subscribe(() => this.userDataService.getUserByNickname(this.createAccountForm.value.nickname)
       .subscribe(data => {
         this.setCurrentUser(data!)
-        this.navigateToPortfolio(data!.nickname)
+        this.navigateToPortfolio(data!.id!, data!.nickname)
         this.setNavbarStatus(true)
       }))
     }
@@ -70,7 +70,7 @@ export class NewSimulationComponent implements OnInit {
     this.userDataService.setCurrentUser(user)
   }
 
-  navigateToPortfolio(nickname: string): void {
-    this.routingService.navigate(`simulation/${nickname}/portfolio`)
+  navigateToPortfolio(id: string, nickname: string): void {
+    this.routingService.navigate(`simulation/${id}/${nickname}/portfolio`)
   }
 }
