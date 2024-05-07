@@ -31,7 +31,8 @@ export class NewSimulationComponent implements OnInit {
   initializeForm(): void {
     this.createAccountForm = this.fb.group({
       nickname: ['', [Validators.required, Validators.maxLength(20)]],
-      password: ['', [Validators.required, Validators.maxLength(20)]]
+      password: ['', [Validators.required, Validators.maxLength(20)]],
+      balance: [10000]
     })
   }
 

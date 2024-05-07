@@ -11,9 +11,10 @@ import { PortfolioComponent } from './portfolio/portfolio.component';
 import { CoreModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { UserDataService } from '../core/services/user-data/user-data.service';
-import { RoutingService } from '../core/services/routing/routing.service';
-import { InvestmentService } from '../core/services/investment/investment.service';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,11 @@ import { InvestmentService } from '../core/services/investment/investment.servic
     SharedModule,
     CoreModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatInputModule
   ],
   providers: [
   ]

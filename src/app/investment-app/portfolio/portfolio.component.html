@@ -1,1 +1,8 @@
-<p>portfolio works!</p>
+<div fxFlex fxLayoutAlign="center">
+  <div class="content-container" fxFlex="95%">
+    <div fxFlex="50%">
+      <p>Account: {{currentUser?.nickname}}</p>
+      <p>Current balance: {{currentUser?.balance | currency}}</p>
+    </div>
+  </div>
+</div>

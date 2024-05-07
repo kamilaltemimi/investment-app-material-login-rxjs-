@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { InvestmentService } from '../core/services/investment/investment.service';
 import { RoutingService } from '../core/services/routing/routing.service';
 
 @Component({
@@ -10,7 +9,6 @@ import { RoutingService } from '../core/services/routing/routing.service';
 export class InvestmentAppComponent implements OnInit {
 
   constructor(
-    private investmentService: InvestmentService,
     private routingService: RoutingService
   ){}
 
