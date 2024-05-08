@@ -1,0 +1,36 @@
+<mat-card fxFlex="100%">
+  <mat-card-header>
+    <mat-card-title>{{selectedStock.name}}</mat-card-title>
+    <mat-card-subtitle>{{selectedStock.symbol}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content fxLayout="column">
+    <div fxLayout fxFlex fxLayoutGap="40px">
+      <div fxFlex="90px">
+        <h3>price</h3>
+        <p> ${{selectedStock.price}} </p>
+      </div>
+      <div fxFlex="90px">
+        <h3>change</h3>
+        <p> ${{selectedStock.change}} </p>
+      </div>
+      <div fxFlex="90px">
+        <h3>% change</h3>
+        <p> % {{selectedStock.changesPercentage}} </p>
+      </div>
+      <div fxFlex="90px">
+        <h3>market cap</h3>
+        <p> ${{selectedStock.marketCap}} </p>
+      </div>
+    </div>
+    <form [formGroup]="inputValue" (ngSubmit)="buyStock()">
+      <mat-form-field>
+        <mat-label>Select amount</mat-label>
+        <input formControlName="inputValue" matInput type="number" #input>
+      </mat-form-field>
+    </form>
+    <p>Total price = {{selectedStock.price * (+input.value) | currency}}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button class="confirm-button" [disabled]="!inputValue.valid" type="submit" mat-dialog-close mat-flat-button color="primary" fxFlex="100%">confirm</button>
+  </mat-card-actions>
+</mat-card>

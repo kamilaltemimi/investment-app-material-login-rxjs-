@@ -15,7 +15,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component'
 @NgModule({
   declarations: [
     InvestmentAppComponent,
@@ -24,6 +28,7 @@ import { MatInputModule } from '@angular/material/input';
     MarketComponent,
     MarketComponent,
     PortfolioComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +40,11 @@ import { MatInputModule } from '@angular/material/input';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDialogModule
   ],
   providers: [
   ]

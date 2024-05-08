@@ -9,6 +9,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 Chart.register(LineController, LineElement, PointElement, LinearScale, CategoryScale);
 
 @Component({
@@ -21,15 +23,17 @@ export class MarketComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator
   @ViewChild(MatSort) sort!: MatSort
 
+  selectedStock?: Stock
   public chart: any
   currentUser: User | undefined
   stocks = new MatTableDataSource<Stock>()
-  columns = ["symbol", "name", "price", "dayLow", "dayHigh", "change", "marketCap", "volume"]
+  columns = ["symbol", "name", "price", "change", "marketCap", "volume", "details"]
 
   constructor(
     private userDataService: UserDataService,
     private activatedRoute: ActivatedRoute,
-    private investmentService: InvestmentService
+    private investmentService: InvestmentService,
+    private matDialog: MatDialog
   ){}
 
   ngOnInit(): void {
@@ -95,6 +99,18 @@ export class MarketComponent implements OnInit {
   filter(filterValue: Event) {
     let searchTerm = (filterValue.target as HTMLInputElement).value
     this.stocks.filter = searchTerm
+  }
+
+  gatherInfo(element: Stock): void {
+    this.selectedStock = element
+  }
+
+  openDialog(data: Stock): void {
+    this.matDialog.open(ConfirmationDialogComponent, {
+    data: data,
+    width: '400px',
+    height: '320px'
+    })
   }
 
 }
