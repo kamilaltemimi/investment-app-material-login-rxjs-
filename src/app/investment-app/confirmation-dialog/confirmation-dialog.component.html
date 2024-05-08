@@ -23,7 +23,7 @@
       </div>
     </div>
     <form [formGroup]="inputValue" (ngSubmit)="buyStock()">
-      <mat-form-field>
+      <mat-form-field class="amount-input">
         <mat-label>Select amount</mat-label>
         <input formControlName="inputValue" matInput type="number" #input>
       </mat-form-field>

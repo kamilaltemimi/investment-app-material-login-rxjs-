@@ -108,7 +108,7 @@ export class MarketComponent implements OnInit {
   openDialog(data: Stock): void {
     this.matDialog.open(ConfirmationDialogComponent, {
     data: data,
-    width: '400px',
+    width: '520px',
     height: '320px'
     })
   }
