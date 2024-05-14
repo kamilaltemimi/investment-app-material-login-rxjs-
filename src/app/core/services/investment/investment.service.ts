@@ -2,13 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Stock } from '../../models/stock';
+import { User } from '../../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InvestmentService {
 
-  URL = `https://financialmodelingprep.com/api/v3/symbol/NYSE?apikey=oEs60jHF1NMyiAiTXQTS4QatokiH2v78`
+  apiURL = `https://financialmodelingprep.com/api/v3/symbol/NYSE?apikey=oEs60jHF1NMyiAiTXQTS4QatokiH2v78`
+  investmentURL = 'https://investment-app-d5d6e-default-rtdb.firebaseio.com/users'
 
   navbarStatus = new BehaviorSubject<boolean>(false)
 
@@ -21,7 +23,11 @@ export class InvestmentService {
   ) {}
 
   getStocks(): Observable<Stock[]>{
-    return this.http.get<Stock[]>(this.URL)
+    return this.http.get<Stock[]>(this.apiURL)
+  }
+
+  addStockToPortfolio(userId: string, newUserData: User): Observable<Stock>{
+    return this.http.put<Stock>(this.investmentURL + `/${userId}.json`, newUserData)
   }
 
 
