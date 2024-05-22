@@ -2,3 +2,27 @@
   padding-top: 30px;
   min-height: calc(100% - 64px);
 }
+
+.table-container {
+  width: 900px;
+  max-height: 750px;
+  overflow-y: scroll;
+  border: solid 2px rgba(182, 182, 182, 0.254);
+  border-radius: 5px;
+}
+
+.table-container::-webkit-scrollbar {
+  display: none;
+}
+
+th, td {
+  text-align: center;
+}
+
+.title-balance {
+  color: green;
+}
+
+.title-invested {
+  color: red;
+}

@@ -1,41 +1,44 @@
 <div fxFlex fxLayoutAlign="center">
-  <div class="content-container" fxFlex="95%">
-    <div class="chart-container" fxFlex="40%">
-      <canvas  id="balanceChart" >{{ chart }}</canvas>
-      <div *ngIf="selectedStock">
+  <div class="content-container" fxFlex="95%" fxLayout="column">
+    <div class="chart-container">
+      <canvas class="chart" fxFlex  id="balanceChart" >{{ chart }}</canvas>
+    </div>
+      <div class="stockContainer" *ngIf="selectedStock" fxLayoutAlign="center">
         <mat-card>
           <mat-card-header>
             <mat-card-title>{{selectedStock.name}}</mat-card-title>
             <mat-card-subtitle>{{selectedStock.symbol}}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content fxLayout>
-            <div fxLayout fxFlex fxLayoutGap="40px">
-              <div fxFlex="90px">
+            <div fxLayout fxFlex fxLayoutGap="20px">
+              <div fxFlex="100px">
                 <h3>price</h3>
                 <p> ${{selectedStock.price}} </p>
               </div>
-              <div fxFlex="90px">
-                <h3>change</h3>
-                <p> ${{selectedStock.change}} </p>
+              <div fxFlex="100px">
+                <h3>$ change</h3>
+                <p>$ {{selectedStock.change.toFixed(2)}} </p>
               </div>
-              <div fxFlex="90px">
+              <div fxFlex="100px">
                 <h3>% change</h3>
-                <p> % {{selectedStock.changesPercentage}} </p>
+                <p> % {{selectedStock.changesPercentage.toFixed(2)}} </p>
               </div>
-              <div fxFlex="90px">
+              <div fxFlex="110px">
                 <h3>market cap</h3>
-                <p> ${{selectedStock.marketCap}} </p>
+                <p> $ {{selectedStock.marketCap}} </p>
               </div>
             </div>
           </mat-card-content>
           <mat-card-actions fxLayout>
             <button (click)="openDialog(selectedStock)" mat-flat-button color="primary" fxFlex="100%">buy</button>
           </mat-card-actions>
+          <mat-card-footer>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </mat-card-footer>
         </mat-card>
       </div>
-    </div>
     <div fxFlex="60%" fxLayout="column">
-      <mat-form-field>
+      <mat-form-field class="filterInput">
         <input matInput (keydown)="filter($event)" placeholder="filter items...">
       </mat-form-field>
     <table mat-table [dataSource]="stocks" matSort>

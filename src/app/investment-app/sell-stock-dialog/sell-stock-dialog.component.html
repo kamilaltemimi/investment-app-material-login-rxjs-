@@ -1,0 +1,28 @@
+<mat-card class="card">
+    <mat-card-header>
+        <mat-card-subtitle>{{stockData.name}}</mat-card-subtitle>
+        <mat-card-title>{{stockData.symbol}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>You hold {{stockData.amount}} {{stockData.symbol}} stocks</p>
+        <p>Value: {{stockData.value | currency}}</p>
+        <p>You get: {{selectedValue * stockData.price | currency}}</p>
+        <p>Current balance: {{currentUser.balance | currency}}</p>
+        <mat-form-field>
+            <mat-label>select amount</mat-label>
+            <mat-select [(ngModel)]="selectedValue">
+                <mat-option value="{{number}}" *ngFor="let number of stockAmount">{{number}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+    </mat-card-content>
+    <mat-card-actions>
+        <div fxFlex="375px" fxLayout fxLayoutGap="10px" fxLayoutAlign="end">
+            <button mat-dialog-close (click)="sellStock()" mat-flat-button color="warn">SELL</button>
+            <button mat-dialog-close mat-flat-button color="primary">CLOSE</button>
+        </div>
+    </mat-card-actions>
+    <mat-card-footer>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </mat-card-footer>
+</mat-card>

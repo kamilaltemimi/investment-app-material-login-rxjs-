@@ -26,10 +26,9 @@ export class InvestmentService {
     return this.http.get<Stock[]>(this.apiURL)
   }
 
-  addStockToPortfolio(userId: string, newUserData: User): Observable<Stock>{
-    return this.http.put<Stock>(this.investmentURL + `/${userId}.json`, newUserData)
+  addOrSellStock(userId: string, newUserData: User): Observable<User> {
+    return this.http.put<User>(this.investmentURL + `/${userId}.json`, newUserData)
   }
-
 
 }
 

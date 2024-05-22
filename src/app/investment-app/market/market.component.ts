@@ -27,7 +27,7 @@ export class MarketComponent implements OnInit {
   public chart: any
   currentUser: User | undefined
   stocks = new MatTableDataSource<Stock>()
-  columns = ["symbol", "name", "price", "change", "marketCap", "volume", "details"]
+  columns = ['symbol', 'name', 'price', 'change', 'marketCap', 'volume', 'details']
 
   constructor(
     private userDataService: UserDataService,
@@ -41,7 +41,7 @@ export class MarketComponent implements OnInit {
     this.getCurrentUser()
   }
 
-  createChart(){
+  createChart(): void{
     this.chart = new Chart("balanceChart", {
       type: 'line', 
       data: {
@@ -54,9 +54,10 @@ export class MarketComponent implements OnInit {
         }]
       },
       options: {
-        aspectRatio:2
+        aspectRatio:4,
+        responsive: true,
+        maintainAspectRatio: false
       }
-      
     });
   }
 
@@ -73,7 +74,7 @@ export class MarketComponent implements OnInit {
   generateDates(): string[] {
     let dates = []
     let today = new Date()
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < 10; i++) {
       let date = new Date(today)
       date.setDate(date.getDate() - i)
       dates.push(date.toISOString().slice(0, 10))
@@ -107,7 +108,10 @@ export class MarketComponent implements OnInit {
 
   openDialog(data: Stock): void {
     this.matDialog.open(ConfirmationDialogComponent, {
-    data: data,
+    data: {
+      stockData: data, 
+      userData: this.currentUser
+    },
     width: '520px',
     height: '320px'
     })

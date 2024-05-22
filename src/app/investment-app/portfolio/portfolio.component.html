@@ -1,8 +1,54 @@
 <div fxFlex fxLayoutAlign="center">
-  <div class="content-container" fxFlex="95%">
-    <div fxFlex="50%">
-      <p>Account: {{currentUser?.nickname}}</p>
-      <p>Current balance: {{currentUser?.balance | currency}}</p>
+  <div class="content-container" fxFlex="95%" fxLayout="column" fxLayoutAlign="start center">
+    <div>
+      <div fxLayout fxLayoutGap="50px">
+        <h2 class="title-balance">Balance: {{currentUser?.balance | currency}}</h2>
+        <h2 class="title-invested">Invested funds: {{investedFunds | currency}}</h2>
+      </div>
+
+      <div class="table-container">
+        <table mat-table [dataSource]="ownedStocks">
+          <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef>symbol</th>
+            <td mat-cell *matCellDef="let stock">{{stock.symbol}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>name</th>
+            <td mat-cell *matCellDef="let stock">{{stock.name}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>price</th>
+            <td mat-cell *matCellDef="let stock">{{stock.price | currency}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>amount</th>
+            <td mat-cell *matCellDef="let stock">{{stock.amount}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>value</th>
+            <td mat-cell *matCellDef="let stock">{{stock.value | currency}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="change">
+            <th mat-header-cell *matHeaderCellDef>change</th>
+            <td mat-cell *matCellDef="let stock">{{stock.change}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="sell">
+            <th mat-header-cell *matHeaderCellDef>sell</th>
+            <td mat-cell *matCellDef="let stock">
+              <button mat-flat-button color="warn" (click)="openSellStockDialog(stock)">Sell</button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columns"></tr>
+          <tr mat-row *matRowDef="let row; columns: columns"></tr>
+        </table>
+      </div>
     </div>
   </div>
 </div>

@@ -1,9 +1,9 @@
 import { Stock } from "./stock"
 
 export interface User {
-  id?: string
+  id: string
   nickname: string
   password: string
   balance: number
-  stocks?: Stock[]
+  stocks: Stock[]
 }

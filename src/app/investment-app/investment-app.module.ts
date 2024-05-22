@@ -9,9 +9,8 @@ import { LoadSimulationComponent } from './load-simulation/load-simulation.compo
 import { MarketComponent } from './market/market.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { CoreModule } from '@angular/flex-layout';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
@@ -20,15 +19,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component'
+import { MatTableModule } from '@angular/material/table';
+import { SellStockDialogComponent } from './sell-stock-dialog/sell-stock-dialog.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSelectModule } from '@angular/material/select';
+
 @NgModule({
   declarations: [
     InvestmentAppComponent,
     NewSimulationComponent,
     LoadSimulationComponent,
     MarketComponent,
-    MarketComponent,
     PortfolioComponent,
     ConfirmationDialogComponent,
+    SellStockDialogComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +49,11 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     MatIconModule,
     MatButtonModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressBarModule,
+    MatDividerModule,
+    MatSelectModule,
+    FormsModule
   ],
   providers: [
   ]

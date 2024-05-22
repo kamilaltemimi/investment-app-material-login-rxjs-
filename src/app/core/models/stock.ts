@@ -1,4 +1,5 @@
 export interface Stock {
+  stockData: any;
   symbol: string,
   name: string,
   price: number,
@@ -18,5 +19,7 @@ export interface Stock {
   pe: number,
   earningsAnnouncement: string,
   sharesOutstanding: number,
-  timestamp: number
+  timestamp: number,
+  amount?: number,
+  value?: number
 }
