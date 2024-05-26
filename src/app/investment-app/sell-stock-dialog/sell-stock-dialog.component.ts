@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Stock } from 'src/app/core/models/stock';
 import { User } from 'src/app/core/models/user';
 import { InvestmentService } from 'src/app/core/services/investment/investment.service';
-import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 
 @Component({
   selector: 'app-sell-stock-dialog',
@@ -21,9 +20,8 @@ export class SellStockDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private investmentService: InvestmentService,
-    private userDataService: UserDataService
+    private readonly _dialog: MatDialogRef<SellStockDialogComponent>
   ) {}
-
 
   ngOnInit(): void {
     this.currentUser = this.data.userData
@@ -35,15 +33,10 @@ export class SellStockDialogComponent implements OnInit {
     }
   }
 
-  completeCallback!: () => void;
-
-  setCompleteCallback(callback: () => void): void {
-    this.completeCallback = callback;
-  }
-
   sellStock(): void {
-    let newBalance = this.currentUser.balance += this.selectedValue * this.stockData.price
-
+    let newBalance = this.currentUser.balance + this.selectedValue * this.stockData.price
+    let investedFunds = this.data.investedFunds - this.selectedValue * this.stockData.price
+    
     const updatedStocks = this.currentUser.stocks.map(stock => {
       if (stock.name === this.stockData.name) {
         stock.amount! -= this.selectedValue
@@ -51,13 +44,23 @@ export class SellStockDialogComponent implements OnInit {
       } return stock
     })
 
-    this.investmentService.addOrSellStock(this.currentUser.nickname, {
+    for (let i = 0; i < updatedStocks.length; i++) {
+      if (updatedStocks[i].amount === 0) {
+        updatedStocks.splice(i, 1)
+      }
+    }
+
+    const updatedUser = {
       id: this.currentUser.id,
       nickname: this.currentUser.nickname,
       password: this.currentUser.password,
       balance: newBalance,
-      stocks: updatedStocks
-    }).subscribe(() => this.completeCallback())
+      stocks: updatedStocks,
+      investedFunds: investedFunds
+    }
+
+    this.investmentService.addOrSellStock(this.currentUser.id, updatedUser).subscribe()
+    this._dialog.close(updatedUser)
   }
 
 }

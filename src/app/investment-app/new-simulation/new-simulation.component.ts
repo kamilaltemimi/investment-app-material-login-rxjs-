@@ -32,7 +32,8 @@ export class NewSimulationComponent implements OnInit {
     this.createAccountForm = this.fb.group({
       nickname: ['', [Validators.required, Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.maxLength(20)]],
-      balance: [10000]
+      balance: [10000],
+      investedFunds: [0]
     })
   }
 
@@ -43,15 +44,15 @@ export class NewSimulationComponent implements OnInit {
   submitForm(): void {
     let existingUser = false
     if (this.existingUsers) {
-      for (let user of this.existingUsers) {
+      this.existingUsers.forEach((user => {
         if (user.nickname === this.createAccountForm.value.nickname) {
           this.takenNickname = true
-          setTimeout(() => this.takenNickname = false, 5000)
           existingUser = true
           return
         } 
-      }
+      }))
     }
+
     if (!existingUser) {
       this.userDataService.createUser(this.createAccountForm.value)
       .subscribe(() => this.userDataService.getUserByNickname(this.createAccountForm.value.nickname)
@@ -74,4 +75,5 @@ export class NewSimulationComponent implements OnInit {
   navigateToPortfolio(id: string, nickname: string): void {
     this.routingService.navigate(`simulation/${id}/${nickname}/portfolio`)
   }
+
 }

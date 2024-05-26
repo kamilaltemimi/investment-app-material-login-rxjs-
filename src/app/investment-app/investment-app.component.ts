@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RoutingService } from '../core/services/routing/routing.service';
 
 @Component({
@@ -6,14 +6,11 @@ import { RoutingService } from '../core/services/routing/routing.service';
   templateUrl: './investment-app.component.html',
   styleUrls: ['./investment-app.component.scss']
 })
-export class InvestmentAppComponent implements OnInit {
+export class InvestmentAppComponent {
 
   constructor(
     private routingService: RoutingService
   ){}
-
-  ngOnInit(): void {
-  }
 
   createNewSimulation(): void {
     this.routingService.navigate('new-simulation')

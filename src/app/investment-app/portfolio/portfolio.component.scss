@@ -7,12 +7,12 @@
   width: 900px;
   max-height: 750px;
   overflow-y: scroll;
-  border: solid 2px rgba(182, 182, 182, 0.254);
+  border: solid 2px #b6b6b641;
   border-radius: 5px;
-}
 
-.table-container::-webkit-scrollbar {
-  display: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 th, td {
@@ -20,9 +20,9 @@ th, td {
 }
 
 .title-balance {
-  color: green;
+  color: #008000;
 }
 
 .title-invested {
-  color: red;
+  color: #ff0000;
 }

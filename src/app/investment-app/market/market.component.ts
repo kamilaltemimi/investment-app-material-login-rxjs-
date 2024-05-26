@@ -58,7 +58,7 @@ export class MarketComponent implements OnInit {
         responsive: true,
         maintainAspectRatio: false
       }
-    });
+    })
   }
 
   getCurrentUser(): void {
@@ -89,8 +89,7 @@ export class MarketComponent implements OnInit {
         if (data[i].volume > 8000000 && data[i].marketCap !== 0) 
         stocks.push(data[i])
       } return stocks
-    }
-  )).subscribe(data => {
+    })).subscribe(data => {
       this.stocks = new MatTableDataSource<Stock>(data)
       this.stocks.paginator = this.paginator
       this.stocks.sort = this.sort

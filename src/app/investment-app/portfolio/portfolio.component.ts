@@ -14,6 +14,7 @@ import { SellStockDialogComponent } from '../sell-stock-dialog/sell-stock-dialog
   styleUrls: ['./portfolio.component.scss']
 })
 export class PortfolioComponent implements OnInit {
+
   currentUser?: User
   ownedStocks = new MatTableDataSource<Stock>([])
   columns = ['symbol', 'name', 'price', 'amount', 'value', 'change', 'sell']
@@ -41,13 +42,13 @@ export class PortfolioComponent implements OnInit {
       this.userDataService.currentUser.next(data!)
       this.currentUser = data
 
-      for (let i = 0; i < data!.stocks?.length; i++) {
-        let stock = {...data!.stocks[i], value: data!.stocks[i].amount! * data!.stocks[i].price}
+      data?.stocks?.forEach((stockItem) => {
+        let stock = {...stockItem, value: stockItem.amount! * stockItem.price}
         if (stock.amount !== 0) {
           updatedStocks.push(stock)
           investedFunds += stock.value
         }
-      }
+      })
       this.ownedStocks.data = updatedStocks
       this.investedFunds = investedFunds
     })
@@ -59,10 +60,18 @@ export class PortfolioComponent implements OnInit {
       height: '335px',
       data: {
         stockData: data, 
-        userData: this.currentUser
+        userData: this.currentUser,
+        investedFunds: this.investedFunds
       }
     })
-    dialogRef.componentInstance.setCompleteCallback(() => this.getCurrentUser())
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      this.ownedStocks = result.stocks
+      this.currentUser = result
+      this.investedFunds = result.investedFunds
+      } 
+    })
   }
 
 }

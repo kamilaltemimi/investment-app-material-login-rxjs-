@@ -72,5 +72,3 @@ export class LoadSimulationComponent implements OnInit{
   }
 
 }
-
-

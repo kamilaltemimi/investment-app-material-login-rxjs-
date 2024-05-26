@@ -5,5 +5,6 @@ export interface User {
   nickname: string
   password: string
   balance: number
+  investedFunds: number
   stocks: Stock[]
 }

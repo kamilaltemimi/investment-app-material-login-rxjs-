@@ -1,4 +1,3 @@
-import { ActivatedRoute } from '@angular/router';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/core/models/user';
@@ -12,14 +11,13 @@ import { RoutingService } from 'src/app/core/services/routing/routing.service';
 })
 export class HeaderComponent implements OnInit {
 
-  navbarStatus!: boolean 
+  isVisibleNavbar!: boolean 
   currentUser?: User
 
   constructor(
     private investmentService: InvestmentService,
     private routingService: RoutingService,
-    private userDataService: UserDataService,
-    private activatedRoute: ActivatedRoute
+    private userDataService: UserDataService
   ){}
 
   ngOnInit(): void {
@@ -32,7 +30,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getNavbarStatus(): void {
-    this.investmentService.navbarStatus.subscribe(data => this.navbarStatus = data)
+    this.investmentService.navbarStatus.subscribe(data => this.isVisibleNavbar = data)
   }
 
   goToHomepage(): void {

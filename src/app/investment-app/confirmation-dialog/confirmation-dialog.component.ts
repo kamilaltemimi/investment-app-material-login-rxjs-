@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Stock } from 'src/app/core/models/stock';
 import { User } from 'src/app/core/models/user';
 import { InvestmentService } from 'src/app/core/services/investment/investment.service';
@@ -21,7 +21,8 @@ export class ConfirmationDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     private userDataService: UserDataService,
-    private investmentService: InvestmentService
+    private investmentService: InvestmentService,
+    private readonly _dialog: MatDialogRef<ConfirmationDialogComponent>
   ){}
 
   ngOnInit(): void {
@@ -29,49 +30,39 @@ export class ConfirmationDialogComponent implements OnInit {
     this.inputValue = this.fb.group({
       inputValue: [0, Validators.min(0.1)]
     })
-    this.userDataService.getUserByNickname(this.data.userData.nickname).subscribe(data => this.currentUser = data)
+    this.userDataService.getUserByNickname(this.data.userData.nickname).subscribe(data => {this.currentUser = data})
   }
 
   buyStock(): void {
-    const userBalance = this.currentUser!.balance 
-    const inputValue = this.inputValue.get('inputValue')?.value
-    const stockPrice = this.selectedStock.price
-    const stockName = this.selectedStock.name
 
-    const userNickname = this.currentUser!.nickname
-    const userPassword = this.currentUser!.password
-    const userId = this.currentUser!.id
-    const newUserBalance = userBalance - inputValue * stockPrice
+    const { balance, nickname, password, id, stocks, investedFunds } = this.currentUser!
+    const inputValue = this.inputValue.get('inputValue')?.value ?? 0
+    const { price, name } = this.selectedStock
+    const newInvestedFunds = investedFunds + (inputValue * price)
+    const newUserBalance = balance - (inputValue * price)
 
-    let stockFound = false
-    let updatedStocks = this.currentUser?.stocks ? [...this.currentUser.stocks] : []
-
-    if (newUserBalance < 0 ) {
-      alert('not enough funds')
+    if (newUserBalance < 0) {
+      alert('Not enough funds')
       return
     }
 
-    if (updatedStocks) {
-      for (let i = 0; i < updatedStocks.length; i++) {
-        if (updatedStocks[i].name === stockName) {
-          updatedStocks[i].amount += inputValue
-          stockFound = true
-          break
-        }
-      }
+    const updatedStocks = stocks?.map(stock => 
+      stock.name === name ? {...stock, amount: stock.amount + inputValue, value: (stock.amount + inputValue) * price} : stock) || []
+
+    if (!updatedStocks.some(stock => stock.name === name)) {
+      updatedStocks.push({...this.selectedStock, amount: inputValue, value: inputValue * price})
     }
 
-    if (!stockFound) {
-      updatedStocks.push({...this.selectedStock, amount: inputValue, value: inputValue * this.selectedStock.price})
-    }
-
-    this.investmentService.addOrSellStock(userId, {
-      id: userId,
-      nickname: userNickname,
-      password: userPassword,
+    const updatedUser = {
+      id,
+      nickname,
+      password,
       balance: newUserBalance,
+      investedFunds: newInvestedFunds,
       stocks: updatedStocks
-    }).subscribe()
+    }
+
+    this.investmentService.addOrSellStock(id, updatedUser).subscribe()
   }
 
 }
