@@ -80,15 +80,21 @@ export class PortfolioComponent implements OnInit {
 
   getStockExchangeInformation(): void {
     this.investmentService.getStocks().subscribe((data: Stock[]) => {
+      
+      let portfolioValue = 0
+      
       const updatedOwnedStocks = this.ownedStocks.data.map((ownedStock: Stock) => {
         const foundStock = data.find((stock: Stock) => stock.symbol === ownedStock.symbol)
         if (foundStock) {
-          this.portfolioValue =+ foundStock.price * ownedStock.amount!
-          return {...ownedStock, price: foundStock.price, value: ownedStock.amount! * foundStock.price!}
+          const stockValue = ownedStock.amount! * foundStock.price!
+          portfolioValue += stockValue
+          return {...ownedStock, price: foundStock.price, value: stockValue}
         } 
         return ownedStock
       })
+
       this.ownedStocks.data = updatedOwnedStocks
+      this.portfolioValue = portfolioValue
     })
   }
 
