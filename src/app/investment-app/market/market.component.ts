@@ -83,13 +83,7 @@ export class MarketComponent implements OnInit {
   }
 
   getStocks(): void {
-    this.investmentService.getStocks().pipe(map(data => {
-      let stocks = []
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].volume > 8000000 && data[i].marketCap !== 0) 
-        stocks.push(data[i])
-      } return stocks
-    })).subscribe(data => {
+    this.investmentService.getStocks().subscribe(data => {
       this.stocks = new MatTableDataSource<Stock>(data)
       this.stocks.paginator = this.paginator
       this.stocks.sort = this.sort

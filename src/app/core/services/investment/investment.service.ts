@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Stock } from '../../models/stock';
 import { User } from '../../models/user';
 
@@ -23,7 +23,13 @@ export class InvestmentService {
   ) {}
 
   getStocks(): Observable<Stock[]>{
-    return this.http.get<Stock[]>(this.apiURL)
+    return this.http.get<Stock[]>(this.apiURL).pipe(map((data: Stock[]) => {
+      let stocks = []
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].volume > 8000000 && data[i].marketCap !== 0) 
+        stocks.push(data[i])
+      } return stocks
+    }))
   }
 
   addOrSellStock(userId: string, newUserData: User): Observable<User> {

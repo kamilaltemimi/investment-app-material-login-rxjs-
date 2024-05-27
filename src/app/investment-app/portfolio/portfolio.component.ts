@@ -7,6 +7,7 @@ import { User } from 'src/app/core/models/user';
 import { InvestmentService } from 'src/app/core/services/investment/investment.service';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { SellStockDialogComponent } from '../sell-stock-dialog/sell-stock-dialog.component';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-portfolio',
@@ -18,7 +19,9 @@ export class PortfolioComponent implements OnInit {
   currentUser?: User
   ownedStocks = new MatTableDataSource<Stock>([])
   columns = ['symbol', 'name', 'price', 'amount', 'value', 'change', 'sell']
-  investedFunds!: number
+  investedFunds = 0
+  apiStocks!: Stock[]
+  portfolioValue = 0
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -29,6 +32,7 @@ export class PortfolioComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCurrentUser()
+    this.getStockExchangeInformation()
   }
 
   getCurrentUser(): void {
@@ -71,6 +75,20 @@ export class PortfolioComponent implements OnInit {
       this.currentUser = result
       this.investedFunds = result.investedFunds
       } 
+    })
+  }
+
+  getStockExchangeInformation(): void {
+    this.investmentService.getStocks().subscribe((data: Stock[]) => {
+      const updatedOwnedStocks = this.ownedStocks.data.map((ownedStock: Stock) => {
+        const foundStock = data.find((stock: Stock) => stock.symbol === ownedStock.symbol)
+        if (foundStock) {
+          this.portfolioValue =+ foundStock.price * ownedStock.amount!
+          return {...ownedStock, price: foundStock.price, value: ownedStock.amount! * foundStock.price!}
+        } 
+        return ownedStock
+      })
+      this.ownedStocks.data = updatedOwnedStocks
     })
   }
 
