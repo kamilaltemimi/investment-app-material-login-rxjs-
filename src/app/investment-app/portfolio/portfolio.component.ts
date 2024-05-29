@@ -65,7 +65,8 @@ export class PortfolioComponent implements OnInit {
       data: {
         stockData: data, 
         userData: this.currentUser,
-        investedFunds: this.investedFunds
+        investedFunds: this.investedFunds,
+        portfolioValue: this.portfolioValue
       }
     })
 
@@ -88,11 +89,11 @@ export class PortfolioComponent implements OnInit {
         if (foundStock) {
           const stockValue = ownedStock.amount! * foundStock.price!
           portfolioValue += stockValue
-          return {...ownedStock, price: foundStock.price, value: stockValue}
+          return {...foundStock, value: stockValue, amount: ownedStock.amount}
         } 
         return ownedStock
       })
-
+      
       this.ownedStocks.data = updatedOwnedStocks
       this.portfolioValue = portfolioValue
     })
