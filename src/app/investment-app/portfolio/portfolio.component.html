@@ -1,10 +1,11 @@
 <div fxFlex fxLayoutAlign="center">
   <div class="content-container" fxFlex="95%" fxLayout="column" fxLayoutAlign="start center">
     <div>
-      <div fxLayout fxLayoutGap="50px">
+      <div fxLayout fxLayoutAlign="space-between">
         <h2 class="title-balance">Balance: {{currentUser?.balance | currency}}</h2>
         <h2 class="title-invested">Invested funds: {{investedFunds | currency}}</h2>
         <h2 class="title-portfolio">Portfolio value: {{portfolioValue | currency}}</h2>
+        <button mat-flat-button color="accent" (click)="refreshStocks()">Refresh Stocks</button>
       </div>
 
       <div class="table-container">
