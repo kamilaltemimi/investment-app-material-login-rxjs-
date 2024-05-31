@@ -7,7 +7,6 @@ import { User } from 'src/app/core/models/user';
 import { InvestmentService } from 'src/app/core/services/investment/investment.service';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { SellStockDialogComponent } from '../sell-stock-dialog/sell-stock-dialog.component';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-portfolio',
@@ -37,8 +36,9 @@ export class PortfolioComponent implements OnInit {
 
   getCurrentUser(): void {
     const userNickname = this.activatedRoute.snapshot.params['nickname']
+    
     this.userDataService.getUserByNickname(userNickname).subscribe(data => {
-
+      console.log(data)
       let updatedStocks: Stock[] = []
       let investedFunds = 0
 
@@ -53,6 +53,7 @@ export class PortfolioComponent implements OnInit {
           investedFunds += stock.value
         }
       })
+
       this.ownedStocks.data = updatedStocks
       this.investedFunds = investedFunds
     })
@@ -72,30 +73,30 @@ export class PortfolioComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-      this.ownedStocks = result.stocks
       this.currentUser = result
+      this.portfolioValue = result.portfolioValue
       this.investedFunds = result.investedFunds
       } 
     })
   }
 
   getStockExchangeInformation(): void {
-    this.investmentService.getStocks().subscribe((data: Stock[]) => {
-      
-      let portfolioValue = 0
-      
+    this.investmentService.getStocks().subscribe((data?: Stock[]) => {
+
       const updatedOwnedStocks = this.ownedStocks.data.map((ownedStock: Stock) => {
-        const foundStock = data.find((stock: Stock) => stock.symbol === ownedStock.symbol)
+        const foundStock = data?.find((stock: Stock) => stock.symbol === ownedStock.symbol)
         if (foundStock) {
           const stockValue = ownedStock.amount! * foundStock.price!
-          portfolioValue += stockValue
-          return {...foundStock, value: stockValue, amount: ownedStock.amount}
+          this.portfolioValue += stockValue
+          return {...ownedStock, price: foundStock.price, value: stockValue, amount: ownedStock.amount}
         } 
         return ownedStock
       })
       
+      this.currentUser!.stocks = updatedOwnedStocks
       this.ownedStocks.data = updatedOwnedStocks
-      this.portfolioValue = portfolioValue
+
+      this.investmentService.addOrSellStock(this.currentUser!.id, {...this.currentUser!, stocks: updatedOwnedStocks}).subscribe()
     })
   }
 

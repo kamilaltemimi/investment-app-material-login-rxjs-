@@ -35,7 +35,7 @@ export class ConfirmationDialogComponent implements OnInit {
 
   buyStock(): void {
 
-    const { balance, nickname, password, id, stocks, investedFunds } = this.currentUser!
+    const { balance, nickname, password, id, stocks, investedFunds, portfolioValue } = this.currentUser!
     const inputValue = this.inputValue.get('inputValue')?.value ?? 0
     const { price, name } = this.selectedStock
     const newInvestedFunds = investedFunds + (inputValue * price)
@@ -47,10 +47,10 @@ export class ConfirmationDialogComponent implements OnInit {
     }
 
     const updatedStocks = stocks?.map(stock => 
-      stock.name === name ? {...stock, amount: stock.amount + inputValue, value: (stock.amount + inputValue) * price} : stock) || []
+      stock.name === name ? {...stock, amount: stock.amount + inputValue, value: (stock.amount + inputValue) * price, priceWhenBought: price} : stock) || []
 
     if (!updatedStocks.some(stock => stock.name === name)) {
-      updatedStocks.push({...this.selectedStock, amount: inputValue, value: inputValue * price})
+      updatedStocks.push({...this.selectedStock, amount: inputValue, value: inputValue * price, boughtFor: price, valueWhenBought: inputValue * price})
     }
 
     const updatedUser = {
@@ -59,7 +59,8 @@ export class ConfirmationDialogComponent implements OnInit {
       password,
       balance: newUserBalance,
       investedFunds: newInvestedFunds,
-      stocks: updatedStocks
+      stocks: updatedStocks,
+      portfolioValue
     }
 
     this.investmentService.addOrSellStock(id, updatedUser).subscribe()

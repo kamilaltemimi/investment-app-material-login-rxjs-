@@ -14,7 +14,6 @@ export class SellStockDialogComponent implements OnInit {
   stockData!: Stock
   stockAmount!: number[]
   selectedValue!: number
-  currentBalance!: number
   currentUser!: User
 
   constructor(
@@ -27,7 +26,7 @@ export class SellStockDialogComponent implements OnInit {
     this.currentUser = this.data.userData
     this.stockData = this.data.stockData
     let amount = []
-    for (let i = 0; i <= this.data.stockData.amount!; i++) {
+    for (let i = 1; i <= this.data.stockData.amount!; i++) {
       amount.push(i)
       this.stockAmount = amount
     }
@@ -35,8 +34,9 @@ export class SellStockDialogComponent implements OnInit {
 
   sellStock(): void {
     let newBalance = this.currentUser.balance + this.selectedValue * this.stockData.price
-    let investedFunds = this.data.investedFunds - this.selectedValue * this.stockData.price
-    
+    let investedFunds = this.data.investedFunds - this.stockData.boughtFor! * this.selectedValue
+    let newPortfolioValue = this.data.portfolioValue - this.selectedValue * this.stockData.price
+    console.log(this.currentUser)
     const updatedStocks = this.currentUser.stocks.map(stock => {
       if (stock.name === this.stockData.name) {
         stock.amount! -= this.selectedValue
@@ -56,9 +56,9 @@ export class SellStockDialogComponent implements OnInit {
       password: this.currentUser.password,
       balance: newBalance,
       stocks: updatedStocks,
-      investedFunds: investedFunds
+      investedFunds: investedFunds,
+      portfolioValue: newPortfolioValue
     }
-
     this.investmentService.addOrSellStock(this.currentUser.id, updatedUser).subscribe()
     this._dialog.close(updatedUser)
   }

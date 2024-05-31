@@ -7,4 +7,5 @@ export interface User {
   balance: number
   investedFunds: number
   stocks: Stock[]
+  portfolioValue: number
 }

@@ -21,5 +21,7 @@ export interface Stock {
   sharesOutstanding: number,
   timestamp: number,
   amount?: number,
-  value?: number
+  value?: number,
+  boughtFor?: number,
+  valueWhenBought?: number
 }

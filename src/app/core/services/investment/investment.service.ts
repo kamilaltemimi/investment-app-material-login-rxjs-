@@ -26,7 +26,7 @@ export class InvestmentService {
     return this.http.get<Stock[]>(this.apiURL).pipe(map((data: Stock[]) => {
       let stocks = []
       for (let i = 0; i < data.length; i++) {
-        if (data[i].volume > 8000000 && data[i].marketCap !== 0) 
+        if (data[i].volume > 8000 && data[i].marketCap !== 0 && data[i].price < 5000) 
         stocks.push(data[i])
       } return stocks
     }))
