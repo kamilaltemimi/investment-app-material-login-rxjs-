@@ -8,7 +8,6 @@ import { Stock } from 'src/app/core/models/stock';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { map } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 Chart.register(LineController, LineElement, PointElement, LinearScale, CategoryScale);
@@ -63,10 +62,10 @@ export class MarketComponent implements OnInit {
 
   getCurrentUser(): void {
     const userNickname = this.activatedRoute.snapshot.params['nickname']
-    this.userDataService.getUserByNickname(userNickname).subscribe(data => {
-      this.currentUser = data
+    this.userDataService.getUserByNickname(userNickname).subscribe((user: User | undefined) => {
+      this.currentUser = user
       this.investmentService.navbarStatus.next(true)
-      this.userDataService.currentUser.next(data!)
+      this.userDataService.currentUser.next(user!)
       this.createChart()
     })
   }
@@ -83,8 +82,8 @@ export class MarketComponent implements OnInit {
   }
 
   getStocks(): void {
-    this.investmentService.getStocks().subscribe(data => {
-      this.stocks = new MatTableDataSource<Stock>(data)
+    this.investmentService.getStocks().subscribe((stocks: Stock[]) => {
+      this.stocks = new MatTableDataSource<Stock>(stocks)
       this.stocks.paginator = this.paginator
       this.stocks.sort = this.sort
     })

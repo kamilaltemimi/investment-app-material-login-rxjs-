@@ -37,8 +37,7 @@ export class PortfolioComponent implements OnInit {
   getCurrentUser(): void {
     const userNickname = this.activatedRoute.snapshot.params['nickname']
     
-    this.userDataService.getUserByNickname(userNickname).subscribe(data => {
-      console.log(data)
+    this.userDataService.getUserByNickname(userNickname).subscribe((data: User | undefined) => {
       let updatedStocks: Stock[] = []
       let investedFunds = 0
 
@@ -46,7 +45,7 @@ export class PortfolioComponent implements OnInit {
       this.userDataService.currentUser.next(data!)
       this.currentUser = data
 
-      data?.stocks?.forEach((stockItem) => {
+      data!.stocks.forEach((stockItem: Stock) => {
         let stock = {...stockItem, value: stockItem.amount! * stockItem.price}
         if (stock.amount !== 0) {
           updatedStocks.push(stock)
@@ -71,23 +70,23 @@ export class PortfolioComponent implements OnInit {
       }
     })
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: User | undefined ) => {
       if (result) {
       this.currentUser = result
       this.portfolioValue = result.portfolioValue
       this.investedFunds = result.investedFunds
-      this.ownedStocks = result.stocks
+      this.ownedStocks.data = result.stocks
       } 
     })
   }
 
   getStockExchangeInformation(): void {
-    this.investmentService.getStocks().subscribe((data?: Stock[]) => {
+    this.investmentService.getStocks().subscribe((data: Stock[]) => {
 
       let portfolioValue = 0
 
       const updatedOwnedStocks = this.ownedStocks.data.map((ownedStock: Stock) => {
-        const foundStock = data?.find((stock: Stock) => stock.symbol === ownedStock.symbol)
+        const foundStock = data.find((stock: Stock) => stock.symbol === ownedStock.symbol)
         if (foundStock) {
           const stockValue = ownedStock.amount! * foundStock.price!
           portfolioValue += stockValue

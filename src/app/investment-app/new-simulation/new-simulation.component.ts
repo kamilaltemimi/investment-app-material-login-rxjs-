@@ -39,13 +39,13 @@ export class NewSimulationComponent implements OnInit {
   }
 
   getExistingUsers(): void {
-    this.userDataService.getUsers().subscribe(data => this.existingUsers = data)
+    this.userDataService.getUsers().subscribe((data: User[]) => this.existingUsers = data)
   }
 
   submitForm(): void {
     let existingUser = false
     if (this.existingUsers) {
-      this.existingUsers.forEach((user => {
+      this.existingUsers.forEach(((user: User) => {
         if (user.nickname === this.createAccountForm.value.nickname) {
           this.takenNickname = true
           existingUser = true
@@ -57,9 +57,9 @@ export class NewSimulationComponent implements OnInit {
     if (!existingUser) {
       this.userDataService.createUser(this.createAccountForm.value)
       .subscribe(() => this.userDataService.getUserByNickname(this.createAccountForm.value.nickname)
-      .subscribe(data => {
-        this.setCurrentUser(data!)
-        this.navigateToPortfolio(data!.id!, data!.nickname)
+      .subscribe((user: User | undefined ) => {
+        this.setCurrentUser(user!)
+        this.navigateToPortfolio(user!.id, user!.nickname)
         this.setNavbarStatus(true)
       }))
     }

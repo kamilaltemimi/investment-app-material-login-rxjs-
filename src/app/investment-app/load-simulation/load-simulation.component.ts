@@ -36,7 +36,7 @@ export class LoadSimulationComponent implements OnInit{
   }
 
   getUsers(): void {
-    this.userDataService.getUsers().subscribe(data => this.users = data)
+    this.userDataService.getUsers().subscribe((users: User[]) => this.users = users)
   }
 
   submitForm(): void {
@@ -44,9 +44,9 @@ export class LoadSimulationComponent implements OnInit{
     for (let user of this.users) {
       if (user.nickname === this.loginForm.value.nickname && user.password === this.loginForm.value.password) {
         this.userDataService.getUserByNickname(this.loginForm.value.nickname)
-        .subscribe(data => {
-          this.setCurrentUser(data!)
-          this.navigateToPortfolio(data!.id!, data!.nickname)
+        .subscribe((user: User | undefined) => {
+          this.setCurrentUser(user!)
+          this.navigateToPortfolio(user!.id, user!.nickname)
           this.setNavbarStatus(true)
         })
         userFound = true

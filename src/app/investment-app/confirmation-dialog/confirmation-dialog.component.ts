@@ -30,7 +30,7 @@ export class ConfirmationDialogComponent implements OnInit {
     this.inputValue = this.fb.group({
       inputValue: [0, Validators.min(0.1)]
     })
-    this.userDataService.getUserByNickname(this.data.userData.nickname).subscribe(data => {this.currentUser = data})
+    this.userDataService.getUserByNickname(this.data.userData.nickname).subscribe((user: User | undefined) => {this.currentUser = user})
   }
 
   buyStock(): void {
@@ -46,10 +46,10 @@ export class ConfirmationDialogComponent implements OnInit {
       return
     }
 
-    const updatedStocks = stocks?.map(stock => 
+    const updatedStocks = stocks?.map((stock: Stock) => 
       stock.name === name ? {...stock, amount: stock.amount + inputValue, value: (stock.amount + inputValue) * price, priceWhenBought: price} : stock) || []
 
-    if (!updatedStocks.some(stock => stock.name === name)) {
+    if (!updatedStocks.some((stock: Stock) => stock.name === name)) {
       updatedStocks.push({...this.selectedStock, amount: inputValue, value: inputValue * price, boughtFor: price, valueWhenBought: inputValue * price})
     }
 
