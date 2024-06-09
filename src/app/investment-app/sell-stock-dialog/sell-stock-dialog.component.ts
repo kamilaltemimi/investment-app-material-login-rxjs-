@@ -33,9 +33,9 @@ export class SellStockDialogComponent implements OnInit {
   }
 
   sellStock(): void {
-    let newBalance = this.currentUser.balance + this.selectedValue * this.stockData.price
-    let investedFunds = this.data.investedFunds - this.stockData.boughtFor! * this.selectedValue
-    let newPortfolioValue = this.data.portfolioValue - this.selectedValue * this.stockData.price
+    let newBalance = this.currentUser.balance + (this.selectedValue * this.stockData.price)
+    let investedFunds = this.data.investedFunds - (this.stockData.boughtFor! * this.selectedValue)
+    let newPortfolioValue = this.data.portfolioValue - (this.selectedValue * this.stockData.price)
     console.log(this.currentUser)
     const updatedStocks = this.currentUser.stocks.map(stock => {
       if (stock.name === this.stockData.name) {

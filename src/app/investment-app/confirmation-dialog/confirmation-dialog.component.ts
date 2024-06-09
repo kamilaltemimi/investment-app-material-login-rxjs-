@@ -60,7 +60,7 @@ export class ConfirmationDialogComponent implements OnInit {
       balance: newUserBalance,
       investedFunds: newInvestedFunds,
       stocks: updatedStocks,
-      portfolioValue
+      portfolioValue: portfolioValue + (price * inputValue)
     }
 
     this.investmentService.addOrSellStock(id, updatedUser).subscribe()

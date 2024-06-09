@@ -33,7 +33,8 @@ export class NewSimulationComponent implements OnInit {
       nickname: ['', [Validators.required, Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.maxLength(20)]],
       balance: [10000],
-      investedFunds: [0]
+      investedFunds: [0],
+      portfolioValue: [0]
     })
   }
 
