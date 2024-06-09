@@ -3,8 +3,11 @@
   min-height: calc(100% - 64px);
 }
 
+.container-details {
+  padding: 0 10px 5px 10px
+}
+
 .table-container {
-  width: 900px;
   max-height: 750px;
   overflow-y: scroll;
   border: solid 2px #b6b6b641;
@@ -19,14 +22,154 @@ th, td {
   text-align: center;
 }
 
-.title-balance {
+.title-balance-full {
   color: #000000;
+  font-size: 18px;
 }
 
-.title-invested {
+.title-invested-full {
   color: #ff0000;
+  font-size: 18px;
 }
 
-.title-portfolio {
+.title-portfolio-full {
   color: #008000;
+  font-size: 18px;
+}
+
+@media (min-width: 490px) and (max-width: 870px) {
+  .table-container .mat-column-symbol,
+  .table-container .mat-column-change {
+    display: none; 
+  }
+
+  .title-button-short-icon {
+    display: none;
+  }
+
+  .title-button-full {
+    display: none;
+  }
+
+  .container-details {
+    text-align: center;
+  }
+
+  .title-balance-short {
+    color: #000000;
+    font-size: 17px;
+  }
+  
+  .title-invested-short {
+    color: #ff0000;
+    font-size: 17px;
+  }
+  
+  .title-portfolio-short {
+    color: #008000;
+    font-size: 17px;
+  }
+
+  .title-balance-full {
+    display: none;
+  }
+  
+  .title-invested-full {
+    display: none;
+  }
+  
+  .title-portfolio-full{
+    display: none;
+  }
+
+  .title-button {
+    width: 150px;
+  }
+}
+
+@media (min-width: 871px) {
+  .title-button-short {
+    display: none;
+  }
+
+  .title-button-short-icon {
+    display: none;
+  }
+
+  .title-balance-full {
+    color: #000000;
+    text-align: center;
+  }
+  
+  .title-invested-full {
+    color: #ff0000;
+    text-align: center;
+  }
+  
+  .title-portfolio-full {
+    color: #008000;
+    text-align: center;
+  }
+
+  .title-balance-short {
+    display: none;
+  }
+  
+  .title-invested-short {
+    display: none;
+  }
+  
+  .title-portfolio-short{
+    display: none;
+  }
+}
+
+@media (max-width: 490px) {
+  .table-container .mat-column-symbol,
+  .table-container .mat-column-change,
+  .table-container .mat-column-price  {
+    display: none; 
+  }
+
+  .title-button-short {
+    display: none;
+  }
+
+  .title-button-full {
+    display: none;
+  }
+
+  .title-balance-short {
+    color: #000000;
+    font-size: 16px;
+  }
+  
+  .title-invested-short {
+    color: #ff0000;
+    font-size: 16px;
+  }
+  
+  .title-portfolio-short {
+    color: #008000;
+    font-size: 16px;
+  }
+
+  .title-balance-full {
+    display: none;
+  }
+  
+  .title-invested-full {
+    display: none;
+  }
+  
+  .title-portfolio-full{
+    display: none;
+  }
+
+  .refresh-icon {
+    height: 30px;
+    width: 30px;
+  }
+
+
 }

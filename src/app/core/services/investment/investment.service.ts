@@ -35,5 +35,4 @@ export class InvestmentService {
   addOrSellStock(userId: string, newUserData: User): Observable<User> {
     return this.http.put<User>(this.investmentURL + `/${userId}.json`, newUserData)
   }
-
 }

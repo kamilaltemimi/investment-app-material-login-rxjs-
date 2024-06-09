@@ -1,11 +1,21 @@
 <div fxFlex fxLayoutAlign="center">
-  <div class="content-container" fxFlex="95%" fxLayout="column" fxLayoutAlign="start center">
-    <div>
-      <div fxLayout fxLayoutAlign="space-between">
-        <h2 class="title-balance">Balance: {{currentUser?.balance | currency}}</h2>
-        <h2 class="title-invested">Invested funds: {{investedFunds | currency}}</h2>
-        <h2 class="title-portfolio">Portfolio value: {{portfolioValue | currency}}</h2>
-        <button mat-flat-button color="accent" (click)="refreshStocks()">Refresh Stocks</button>
+  <div class="content-page" fxFlex="95%" fxLayout="column" fxLayoutAlign="start center">
+    <div class="content-container" fxLayout="column" fxLayoutAlign="center space-between">
+      <div class="container-details" fxLayout fxLayoutAlign="space-between center">
+        <div class="title-balance-full">Balance: {{currentUser?.balance | currency}}</div>
+        <div class="title-invested-full">Invested funds: {{investedFunds | currency}}</div>
+        <div class="title-portfolio-full">Portfolio value: {{portfolioValue | currency}}</div>
+        <div class="title-balance-short">Balance: {{currentUser?.balance | currency}}</div>
+        <div class="title-invested-short">Invested: {{investedFunds | currency}}</div>
+        <div class="title-portfolio-short">Portfolio: {{portfolioValue | currency}}</div>
+        <div class="title-button-full"><button mat-flat-button color="accent" (click)="refreshStocks()">Refresh Stocks</button></div>
+        <div class="title-button-short"><button mat-flat-button color="accent" (click)="refreshStocks()">Refresh</button></div>
+        <div class="title-button-short-icon"><button mat-flat-button color="accent" (click)="refreshStocks()">
+          <span>
+            <img class="refresh-icon" src="../../../assets/refresh-icon.png">
+          </span>
+        </button>
+        </div>
       </div>
 
       <div class="table-container">
