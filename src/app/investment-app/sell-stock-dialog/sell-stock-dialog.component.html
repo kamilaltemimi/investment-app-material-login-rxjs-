@@ -1,4 +1,4 @@
-<mat-card class="card">
+<mat-card class="card" >
     <mat-card-header>
         <mat-card-subtitle>{{stockData.name}}</mat-card-subtitle>
         <mat-card-title>{{stockData.symbol}}</mat-card-title>
@@ -17,7 +17,7 @@
         <mat-divider></mat-divider>
     </mat-card-content>
     <mat-card-actions>
-        <div fxFlex="375px" fxLayout fxLayoutGap="10px" fxLayoutAlign="end">
+        <div fxFlex fxLayout fxLayoutGap="10px" fxLayoutAlign="end">
             <button mat-dialog-close (click)="sellStock()" mat-flat-button color="warn">SELL</button>
             <button mat-dialog-close mat-flat-button color="primary">CLOSE</button>
         </div>

@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/investment-app",
+    "public": "dist/investment-app/browser",
     "ignore": [
       "firebase.json",
       "**/.*",

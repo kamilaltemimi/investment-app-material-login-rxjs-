@@ -76,6 +76,7 @@ export class PortfolioComponent implements OnInit {
       this.currentUser = result
       this.portfolioValue = result.portfolioValue
       this.investedFunds = result.investedFunds
+      this.ownedStocks = result.stocks
       } 
     })
   }
