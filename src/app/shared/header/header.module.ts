@@ -6,23 +6,17 @@ import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-@NgModule({
-  declarations: [
-    HeaderComponent
-  ],
-  imports: [
-    CommonModule,
-    MatToolbarModule,
-    MatListModule,
-    SharedModule,
-    MatMenuModule,
-    MatIconModule,
-    HttpClientModule
+@NgModule({ declarations: [
+        HeaderComponent
     ],
-  exports: [
-    HeaderComponent
-  ]
-})
+    exports: [
+        HeaderComponent
+    ], imports: [CommonModule,
+        MatToolbarModule,
+        MatListModule,
+        SharedModule,
+        MatMenuModule,
+        MatIconModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class HeaderModule { }

@@ -10,30 +10,24 @@ import { MarketComponent } from './market/market.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { CoreModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component'
 import { SellStockDialogComponent } from './sell-stock-dialog/sell-stock-dialog.component';
 
-@NgModule({
-  declarations: [
-    InvestmentAppComponent,
-    NewSimulationComponent,
-    LoadSimulationComponent,
-    MarketComponent,
-    PortfolioComponent,
-    ConfirmationDialogComponent,
-    SellStockDialogComponent
-  ],
-  imports: [
-    CommonModule,
-    InvestmentAppRoutingModule,
-    SharedModule,
-    CoreModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    FormsModule
-  ],
-  providers: [
-  ]
-})
+@NgModule({ declarations: [
+        InvestmentAppComponent,
+        NewSimulationComponent,
+        LoadSimulationComponent,
+        MarketComponent,
+        PortfolioComponent,
+        ConfirmationDialogComponent,
+        SellStockDialogComponent
+    ], imports: [CommonModule,
+        InvestmentAppRoutingModule,
+        SharedModule,
+        CoreModule,
+        ReactiveFormsModule,
+        FormsModule], providers: [
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class InvestmentAppModule { }
