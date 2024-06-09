@@ -3,7 +3,7 @@
     <div class="chart-container">
       <canvas class="chart" fxFlex  id="balanceChart" >{{ chart }}</canvas>
     </div>
-      <div class="stockContainer" *ngIf="selectedStock" fxLayoutAlign="center">
+      <div fxFlex class="stockContainer" *ngIf="selectedStock" fxLayoutAlign="center">
         <mat-card>
           <mat-card-header>
             <mat-card-title>{{selectedStock.name}}</mat-card-title>
@@ -11,21 +11,21 @@
           </mat-card-header>
           <mat-card-content fxLayout>
             <div fxLayout fxFlex fxLayoutGap="20px">
-              <div fxFlex="100px">
+              <div class="stock-detail-price">
                 <h3>price</h3>
-                <p> ${{selectedStock.price}} </p>
+                <div> ${{selectedStock.price}} </div>
               </div>
-              <div fxFlex="100px">
+              <div class="stock-detail-change-dollars">
                 <h3>$ change</h3>
-                <p>$ {{selectedStock.change.toFixed(2)}} </p>
+                <div>$ {{selectedStock.change.toFixed(2)}} </div>
               </div>
-              <div fxFlex="100px">
+              <div class="stock-detail-change-percent">
                 <h3>% change</h3>
-                <p> % {{selectedStock.changesPercentage.toFixed(2)}} </p>
+                <div> % {{selectedStock.changesPercentage.toFixed(2)}} </div>
               </div>
-              <div fxFlex="110px">
+              <div class="stock-detail-market-cap">
                 <h3>market cap</h3>
-                <p> $ {{selectedStock.marketCap}} </p>
+                <div> $ {{selectedStock.marketCap}}</div>
               </div>
             </div>
           </mat-card-content>

@@ -9,3 +9,9 @@ mat-card {
 .amount-input {
   margin-top: 10px;
 }
+
+@media (max-width: 490px) {
+  .stock-detail-market-cap {
+    display: none;
+  }
+}

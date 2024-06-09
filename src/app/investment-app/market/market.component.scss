@@ -32,3 +32,68 @@ th {
   align-content: center;
   align-self: center;
 }
+
+.filterInput {
+width: 472px;
+align-self: center;
+}
+ 
+.stock-detail-change-percent, 
+.stock-detail-change-dollars, 
+.stock-detail-price {
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.stock-detail-market-cap {
+  width: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 850px) {
+  .filterInput {
+    width: 472px;
+  }
+
+  .mat-column-marketCap {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .mat-column-volume {
+    display: none;
+  }
+}
+
+@media (max-width: 535px) {
+  .filterInput {
+    width: 362px;
+  }
+
+  .mat-column-change {
+    display: none;
+  }
+
+  .stock-detail-market-cap {
+    display: none;
+  }
+}
+
+@media (max-width: 430px) {
+  .filterInput {
+    width: 300px;
+  }
+
+  .mat-column-symbol {
+    display: none;
+  }
+  
+}

@@ -4,7 +4,7 @@
     <mat-card-subtitle>{{selectedStock.symbol}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content fxLayout="column">
-    <div fxLayout fxFlex fxLayoutGap="40px">
+    <div fxLayout fxFlex fxLayoutAlign="space-between">
       <div fxFlex="90px">
         <h3>price</h3>
         <p> ${{selectedStock.price}} </p>
@@ -17,7 +17,7 @@
         <h3>% change</h3>
         <p> % {{selectedStock.changesPercentage}} </p>
       </div>
-      <div fxFlex="90px">
+      <div class="stock-detail-market-cap" fxFlex="90px">
         <h3>market cap</h3>
         <p> ${{selectedStock.marketCap}} </p>
       </div>

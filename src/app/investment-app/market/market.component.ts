@@ -74,10 +74,10 @@ export class MarketComponent implements OnInit {
   generateDates(): string[] {
     let dates = []
     let today = new Date()
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 7; i++) {
       let date = new Date(today)
       date.setDate(date.getDate() - i)
-      dates.push(date.toISOString().slice(0, 10))
+      dates.push(date.toISOString().slice(0, 7))
     }
     return dates.reverse()
   }
