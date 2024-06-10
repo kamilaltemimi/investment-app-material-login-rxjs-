@@ -35,7 +35,7 @@ export class ConfirmationDialogComponent implements OnInit {
 
   buyStock(): void {
 
-    const { balance, nickname, password, id, stocks, investedFunds, portfolioValue, soldStockAmount, soldStockName, boughtStockAmount, boughtStockName } = this.currentUser!
+    const { balance, nickname, password, id, stocks, investedFunds, portfolioValue, soldStockAmount, soldStockName } = this.currentUser!
     const inputValue = this.inputValue.get('inputValue')?.value ?? 0
     const { price, name } = this.selectedStock
     const newInvestedFunds = investedFunds + (inputValue * price)

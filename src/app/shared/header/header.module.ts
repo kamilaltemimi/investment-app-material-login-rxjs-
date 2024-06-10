@@ -21,5 +21,5 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
         MatMenuModule,
         MatIconModule], 
     providers: [provideHttpClient(withInterceptorsFromDi())] })
-    
+
 export class HeaderModule { }

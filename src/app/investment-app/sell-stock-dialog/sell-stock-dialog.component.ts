@@ -33,35 +33,38 @@ export class SellStockDialogComponent implements OnInit {
   }
 
   sellStock(): void {
-    let newBalance = this.currentUser.balance + (this.selectedValue * this.stockData.price)
-    let investedFunds = this.data.investedFunds - (this.stockData.boughtFor! * this.selectedValue)
-    let newPortfolioValue = this.data.portfolioValue - (this.selectedValue * this.stockData.price)
-    const updatedStocks = this.currentUser.stocks.map((stock: Stock) => {
+    const { balance, stocks, id } = this.currentUser
+    const { price, boughtFor, name } = this.stockData
+    const { investedFunds, portfolioValue } = this.data
+
+    const newBalance = balance + this.selectedValue * price;
+    const newInvestedFunds = investedFunds - this.selectedValue * boughtFor!
+    const newPortfolioValue = portfolioValue - this.selectedValue * price
+    const selectedValue = this.selectedValue
+
+    const updatedStocks = stocks
+      .map((stock: Stock) => stock.name === name ? {...stock, amount: stock.amount! - selectedValue, value: stock.value! - (selectedValue * price)} : stock)
+      .filter((stock: Stock) => stock.amount !== 0)
+
+      this.currentUser.stocks.map((stock: Stock) => {
       if (stock.name === this.stockData.name) {
         stock.amount! -= this.selectedValue
         stock.value! -= this.selectedValue * stock.price
       } return stock
     })
 
-    for (let i = 0; i < updatedStocks.length; i++) {
-      if (updatedStocks[i].amount === 0) {
-        updatedStocks.splice(i, 1)
-      }
-    }
-
     const updatedUser = {
-      id: this.currentUser.id,
-      nickname: this.currentUser.nickname,
-      password: this.currentUser.password,
+      ...this.currentUser,
       balance: newBalance,
       stocks: updatedStocks,
-      investedFunds: investedFunds,
+      investedFunds: newInvestedFunds,
       portfolioValue: newPortfolioValue,
-      soldStockAmount: Number(this.selectedValue),
-      soldStockName: this.data.stockData.name
+      soldStockAmount: Number(selectedValue),
+      soldStockName: name
     }
 
-    this.investmentService.addOrSellStock(this.currentUser.id, updatedUser).subscribe()
+    this.investmentService.addOrSellStock(id, updatedUser).subscribe()
+    
     this._dialog.close(updatedUser)
   }
 
