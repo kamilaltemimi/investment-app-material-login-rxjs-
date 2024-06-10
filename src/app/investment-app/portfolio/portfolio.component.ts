@@ -7,6 +7,7 @@ import { User } from 'src/app/core/models/user';
 import { InvestmentService } from 'src/app/core/services/investment/investment.service';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { SellStockDialogComponent } from '../sell-stock-dialog/sell-stock-dialog.component';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-portfolio',
@@ -22,11 +23,15 @@ export class PortfolioComponent implements OnInit {
   apiStocks!: Stock[]
   portfolioValue = 0
 
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private userDataService: UserDataService,
     private investmentService: InvestmentService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private _snackBar: MatSnackBar
   ){}
 
   ngOnInit(): void {
@@ -45,7 +50,7 @@ export class PortfolioComponent implements OnInit {
       this.userDataService.currentUser.next(data!)
       this.currentUser = data
 
-      data!.stocks.forEach((stockItem: Stock) => {
+      data!.stocks?.forEach((stockItem: Stock) => {
         let stock = {...stockItem, value: stockItem.amount! * stockItem.price}
         if (stock.amount !== 0) {
           updatedStocks.push(stock)
@@ -70,12 +75,18 @@ export class PortfolioComponent implements OnInit {
       }
     })
 
-    dialogRef.afterClosed().subscribe((result: User | undefined ) => {
+    dialogRef.afterClosed().subscribe((result: User) => {
       if (result) {
+        console.log(result)
       this.currentUser = result
       this.portfolioValue = result.portfolioValue
       this.investedFunds = result.investedFunds
       this.ownedStocks.data = result.stocks
+        if (result.soldStockAmount === 1) {
+          this.openSnackBar(`You just have sold ${result.soldStockAmount} share of stock ${result.soldStockName}`)
+        } else {
+          this.openSnackBar(`You just have sold ${result.soldStockAmount} shares of stock ${result.soldStockName}`)
+        }
       } 
     })
   }
@@ -105,6 +116,13 @@ export class PortfolioComponent implements OnInit {
 
   refreshStocks(): void {
     this.getStockExchangeInformation()
+  }
+
+  openSnackBar(text: string): void {
+    this._snackBar.open(text, 'close', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
 }

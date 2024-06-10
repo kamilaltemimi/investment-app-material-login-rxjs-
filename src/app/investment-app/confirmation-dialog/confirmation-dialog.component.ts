@@ -35,7 +35,7 @@ export class ConfirmationDialogComponent implements OnInit {
 
   buyStock(): void {
 
-    const { balance, nickname, password, id, stocks, investedFunds, portfolioValue } = this.currentUser!
+    const { balance, nickname, password, id, stocks, investedFunds, portfolioValue, soldStockAmount, soldStockName, boughtStockAmount, boughtStockName } = this.currentUser!
     const inputValue = this.inputValue.get('inputValue')?.value ?? 0
     const { price, name } = this.selectedStock
     const newInvestedFunds = investedFunds + (inputValue * price)
@@ -60,10 +60,16 @@ export class ConfirmationDialogComponent implements OnInit {
       balance: newUserBalance,
       investedFunds: newInvestedFunds,
       stocks: updatedStocks,
-      portfolioValue: portfolioValue + (price * inputValue)
+      portfolioValue: portfolioValue + (price * inputValue),
+      soldStockName,
+      soldStockAmount,
+      boughtStockName: name,
+      boughtStockAmount: inputValue
     }
 
     this.investmentService.addOrSellStock(id, updatedUser).subscribe()
+    console.log(updatedUser)
+    this._dialog.close(updatedUser)
   }
 
 }

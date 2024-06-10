@@ -8,4 +8,8 @@ export interface User {
   investedFunds: number
   stocks: Stock[]
   portfolioValue: number
+  soldStockAmount?: number
+  soldStockName?: string
+  boughtStockAmount?: number
+  boughtStockName?: string
 }

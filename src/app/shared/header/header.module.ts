@@ -13,10 +13,13 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
     ],
     exports: [
         HeaderComponent
-    ], imports: [CommonModule,
+    ], imports: 
+        [CommonModule,
         MatToolbarModule,
         MatListModule,
         SharedModule,
         MatMenuModule,
-        MatIconModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        MatIconModule], 
+    providers: [provideHttpClient(withInterceptorsFromDi())] })
+    
 export class HeaderModule { }

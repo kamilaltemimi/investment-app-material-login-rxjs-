@@ -10,6 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 Chart.register(LineController, LineElement, PointElement, LinearScale, CategoryScale);
 
 @Component({
@@ -28,11 +29,15 @@ export class MarketComponent implements OnInit {
   stocks = new MatTableDataSource<Stock>()
   columns = ['symbol', 'name', 'price', 'change', 'marketCap', 'volume', 'details']
 
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center'
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom'
+
   constructor(
     private userDataService: UserDataService,
     private activatedRoute: ActivatedRoute,
     private investmentService: InvestmentService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private _snackBar: MatSnackBar
   ){}
 
   ngOnInit(): void {
@@ -99,13 +104,28 @@ export class MarketComponent implements OnInit {
   }
 
   openDialog(data: Stock): void {
-    this.matDialog.open(ConfirmationDialogComponent, {
+    const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
     data: {
       stockData: data, 
       userData: this.currentUser
     },
     width: '520px',
     height: '320px'
+    })
+
+    dialogRef.afterClosed().subscribe((result: User) => {
+      if (result.boughtStockAmount === 1) {
+        this.openSnackBar(`You just have bought ${result.boughtStockAmount} share of stock ${result.boughtStockName} `)
+      } else {
+        this.openSnackBar(`You just have bought ${result.boughtStockAmount} shares of stock ${result.boughtStockName} `)
+      }
+    })
+  }
+
+  openSnackBar(text: string): void {
+    this._snackBar.open(text, 'close', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition
     })
   }
 
