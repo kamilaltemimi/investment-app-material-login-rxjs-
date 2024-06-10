@@ -87,10 +87,15 @@ export class MarketComponent implements OnInit {
   }
 
   getStocks(): void {
-    this.investmentService.getStocks().subscribe((stocks: Stock[]) => {
-      this.stocks = new MatTableDataSource<Stock>(stocks)
-      this.stocks.paginator = this.paginator
-      this.stocks.sort = this.sort
+    this.investmentService.getStocks().subscribe({
+      next: (stocks: Stock[]) => {
+        this.stocks = new MatTableDataSource<Stock>(stocks)
+        this.stocks.paginator = this.paginator
+        this.stocks.sort = this.sort
+      },
+      error: () => {
+        alert('Too many API requests. Come back later.')
+      }
     })
   }
 

@@ -92,7 +92,8 @@ export class PortfolioComponent implements OnInit {
   }
 
   getStockExchangeInformation(): void {
-    this.investmentService.getStocks().subscribe((data: Stock[]) => {
+    this.investmentService.getStocks().subscribe({
+      next: (data: Stock[]) => {
 
       let portfolioValue = 0
 
@@ -111,7 +112,11 @@ export class PortfolioComponent implements OnInit {
       this.ownedStocks.data = updatedOwnedStocks
 
       this.investmentService.addOrSellStock(this.currentUser!.id, {...this.currentUser!, stocks: updatedOwnedStocks}).subscribe()
-    })
+    },
+      error: () => {
+        alert('Too many API requests. Come back later.')
+      }
+  })
   }
 
   refreshStocks(): void {
