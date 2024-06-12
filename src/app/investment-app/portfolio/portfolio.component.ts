@@ -43,20 +43,18 @@ export class PortfolioComponent implements OnInit {
     const userNickname = this.activatedRoute.snapshot.params['nickname']
     
     this.userDataService.getUserByNickname(userNickname).subscribe((data: User | undefined) => {
-      let updatedStocks: Stock[] = []
       let investedFunds = 0
 
       this.investmentService.navbarStatus.next(true)
       this.userDataService.currentUser.next(data!)
       this.currentUser = data
 
-      data!.stocks?.forEach((stockItem: Stock) => {
-        let stock = {...stockItem, value: stockItem.amount! * stockItem.price}
-        if (stock.amount !== 0) {
-          updatedStocks.push(stock)
-          investedFunds += stock.value
-        }
+      const updatedStocks: Stock[] = data!.stocks
+      .map((stock: Stock) => {
+        investedFunds += stock.valueWhenBought!
+        return stock = {...stock, value: stock.amount! * stock.price}
       })
+      .filter((stock: Stock) => stock.amount !== 0)
 
       this.ownedStocks.data = updatedStocks
       this.investedFunds = investedFunds
